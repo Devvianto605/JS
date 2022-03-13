@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta name="viewport" content="initial-scale=1, width=device-width">
+        <title>SHIBA INU COIN TO BAHT THAI by Devvianto</title>
+    </head>
+    <body>
+        <img  src="https://upload.wikimedia.org/wikipedia/en/5/53/Shiba_Inu_coin_logo.png"
+       width="50" height="50">
+       <h2 id="shibusdt"> --- </h2>
+       <h2 id="usdthb"> --- </h2>
+       <h2> * </h2>
+       <h2> 100,000,000 + 24,273,021 Coins </h2>
+       <h2> = </h2>
+       <h1 id="shibthb1"> --- </h1>
+       <h2> = </h2>
+       <h1 id="shibthbT"> --- </h1>
+       <hr>
+       <img  src="https://upload.wikimedia.org/wikipedia/en/d/d0/Dogecoin_Logo.png"
+       width="50" height="50">
+       <h2 id="dogeusdt"> --- </h2>
+       <h2 id="calInfo"> --- </h2>
+       <h2> = </h2>
+       <h1 id="dogethb"> --- </h1>
+
+       <script>
+        //SHIB->USDT(USD)
+            let shibResult = 0
+            let shibPriceElement = document.getElementById("shibusdt")
+
+            let ws1 = new WebSocket("wss://stream.binance.com:9443/ws/shibusdt@trade")
+        
+            ws1.addEventListener('message', function (event1) {
+            let shibObject = JSON.parse(event1.data)
+            //console.log(shibObject);
+            shibResult = shibObject.p
+            shibPriceElement.innerText = "SHIB/USDT: " + shibResult
+            updateValue1 ()
+            });
+
+            shibPriceElement.innerText = "SHIB/USDT: " + shibResult.toFixed(8)
+
+
+        //USD->THB
+            
+
+            let thbResult = 33.50
+            let thbPriceElement = document.getElementById("usdthb")
+            
+            var obj;
+                fetch('https://free.currconv.com/api/v7/convert?q=USD_THB&compact=ultra&apiKey=c5d18e144579762f9c10')
+                .then(res => res.json())
+                .then(data => obj = data)
+                .then(() => updateValue4 () )    
+
+                function updateValue4 () {
+                    thbResult = obj.USD_THB
+                    console.log('thbResult from fcuco = ' , thbResult )
+                    thbPriceElement.innerText = "USD/THB: " + thbResult.toFixed(2)
+                    updateValue1()
+                }
+
+
+            let ws2 = new WebSocket('wss://ws.finnhub.io?token=c5kjqhiad3ie96efgh4g')
+            
+            // Connection opened -> Subscribe
+            ws2.addEventListener('open', function (event2) {
+            ws2.send(JSON.stringify({'type':'subscribe', 'symbol':'OANDA:USD_THB'}))
+            });
+
+            // Listen for messages
+            ws2.addEventListener('message', function (event2) {
+            let thbObject = JSON.parse(event2.data)
+            console.log(thbObject.data[0].p);
+            thbResult = thbObject.data[0].p
+            thbPriceElement.innerText = "USD/THB: " + thbResult.toFixed(2)
+            updateValue1 ()   
+            });
+            
+
+            thbPriceElement.innerText = "USD/THB: " + thbResult.toFixed(2) + " (Default)"
+
+       //SHIB->THB
+            function updateValue1 () {
+            let shibthbResult1 = thbResult * shibResult *100000000
+            let shibthbResult2 = thbResult * shibResult *24273021
+            let shibthbPriceElement1 = document.getElementById("shibthb1")
+            let shibthbPriceElementT = document.getElementById("shibthbT")
+            shibthbPriceElement1.innerText = shibthbResult1.toFixed(2) + ' + ' + shibthbResult2.toFixed(2) + ' Baht'
+            let shibT = Number(shibthbResult1.toFixed(2)) + Number(shibthbResult2.toFixed(2))
+            shibthbPriceElementT.innerText = shibT.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " Bath"
+        }
+           
+
+        //DOGE->USDT
+            let ws3 = new WebSocket("wss://stream.binance.com:9443/ws/dogeusdt@trade")
+
+            let dogePriceElement = document.getElementById("dogeusdt")
+            let dogethbPriceElement = document.getElementById("dogethb")
+            let calPrice=0
+
+            ws3.onmessage = (event3) => {
+            let dogeObject = JSON.parse(event3.data)
+            //console.log(dogeObject.p)
+            dogePriceElement.innerText = "DOGE/USDT: " + dogeObject.p
+            calPrice = dogeObject.p *thbResult *2000
+            updateValue2() 
+            }
+
+            function updateValue2 () {
+            document.getElementById("calInfo").innerText = '*' + thbResult.toFixed(2) + ' *2000'
+            dogethbPriceElement.innerText =  calPrice.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " Bath"
+            } 
+           
+        </script>
+    </body>
+</html>
