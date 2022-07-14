@@ -44,9 +44,9 @@
         
             ws1.addEventListener('message', function (event1) {
             let object1 = JSON.parse(event1.data)
-            //console.log(Object1);
+            console.log(object1);
             result1 = object1.p
-            priceElement1.innerText = "BTC/THB: " + shibResult
+            priceElement1.innerText = "BTC/THB: " + result1
             updateValue1 ()
             });
 
