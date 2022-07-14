@@ -38,7 +38,7 @@
            let shibResult = 0
             let shibPriceElement = document.getElementById("btcthb")
 
-            let ws1 = new WebSocket("wss://ws.satangcorp.com/ws/usdt_thb@aggTrade")
+            let ws1 = new WebSocket("wss://ws.satangcorp.com/ws/btc_thb@aggTrade")
         
             ws1.addEventListener('message', function (event1) {
             let shibObject = JSON.parse(event1.data)
