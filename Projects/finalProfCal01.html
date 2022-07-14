@@ -40,7 +40,7 @@
            let result1 = 0
            let priceElement1 = document.getElementById("btcthb")
 
-           let ws1 = new WebSocket("wss://ws.satangcorp.com/ws/btc_thb@aggTrade")
+           let ws1 = new WebSocket("wss://ws.satangcorp.com/ws/usdt_thb@aggTrade")
         
             ws1.addEventListener('message', function (event1) {
             let object1 = JSON.parse(event1.data)
