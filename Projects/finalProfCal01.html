@@ -40,7 +40,7 @@
 
            let ws1 = new WebSocket("wss://ws.satangcorp.com/ws/btc_thb@aggTrade")
         
-            ws1.addEventListener('message', function (event1) {
+            ws1.addEventListener('open', function (event1) {
             let object1 = JSON.parse(event1.data)
             //console.log(Object1);
             result1 = object1.p
