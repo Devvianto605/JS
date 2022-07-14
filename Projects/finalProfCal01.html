@@ -41,13 +41,12 @@
            let priceElement1 = document.getElementById("btcthb")
 
            let ws1 = new WebSocket("wss://ws.satangcorp.com/ws/usdt_thb@aggTrade")
-            console.log(ws1);
-            ws1.addEventListener('message', function (event1) {
+           
+            ws1.addEventListener('open', function (event1) {
             let object1 = JSON.parse(event1.data)
             console.log(object1);
             result1 = object1.p
             priceElement1.innerText = "BTC/THB: " + result1
-            updateValue1 ()
             });
 
             priceElement1.innerText = "BTC/THB: " + result1.toFixed(8)
