@@ -11,14 +11,13 @@
       <hr>
       <img  src="https://cryptologos.cc/logos/bitcoin-btc-logo.png?v=022"
        width="50" height="50">
+      <h2> Bitcoin: 0.01818150 BTC </h2>
       
       
       
       
       
       
-      
-      <! -- 
         <img  src="https://upload.wikimedia.org/wikipedia/en/5/53/Shiba_Inu_coin_logo.png"
        width="50" height="50">
        <h2 id="shibusdt"> --- </h2>
@@ -36,8 +35,24 @@
        <h2 id="calInfo"> --- </h2>
        <h2> = </h2>
        <h1 id="dogethb"> --- </h1>
--->
+        
        <script>
+           
+           let shibResult = 0
+            let shibPriceElement = document.getElementById("shibusdt")
+
+            let ws1 = new WebSocket("wss://ws.satangcorp.com/ws/usdt_thb@aggTrade")
+        
+            ws1.addEventListener('message', function (event1) {
+            let shibObject = JSON.parse(event1.data)
+            //console.log(shibObject);
+            shibResult = shibObject.p
+            shibPriceElement.innerText = "SHIB/USDT: " + shibResult
+            updateValue1 ()
+            });
+
+            shibPriceElement.innerText = "SHIB/USDT: " + shibResult.toFixed(8)
+
          
         </script>
     </body>
